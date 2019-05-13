@@ -6,6 +6,17 @@ module.exports = function(environment) {
     environment,
     rootURL: '/',
     locationType: 'auto',
+    'ember-font-awesome': {
+      removeUnusedIcons: environment === 'production',
+      fontFormats: ['svg'],
+      useScss: true,
+    },
+    fontawesome: {
+      defaultPrefix: 'fas',
+      icons: {
+        'free-solid-svg-icons': 'all'
+      }
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -48,7 +59,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    // Production specific configuration
   }
 
   return ENV;

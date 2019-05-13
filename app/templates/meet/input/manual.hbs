@@ -1,0 +1,54 @@
+<h1 class="title">Input Results Manually</h1>
+<form>
+    <label class="checkbox">
+        <Input id="hide-hours" @checked={{this.hideHours}} @type="checkbox" />
+        Hide Hours
+    </label>
+    <div class="field">
+        <div class="control">
+            <label class="label" for="place">Place</label>
+            <Input class="input" id="place" @value={{this.place}} type="number" maxlength="4"/>
+            <p class="help">The place the runner finished in the race</p>
+        </div>
+    </div>
+    <div class="field is-grouped">
+        {{#unless this.hideHours}}
+            <div class="control">
+                <label for="time" class="label">Hours</label>
+                <Input id="hours" class="input" @value={{this.hours}} @type="number" @min="0" @max="99"/>
+            </div>
+        {{/unless}}
+        <div class="control">
+            <label for="minutes" class="label">Minutes</label>
+            <Input id="minutes" class="input" @value={{this.minutes}} @type="number" @min="0" @max="59" @maxlength="2"/>
+        </div>
+        <div class="control">
+            <label for="seconds" class="label">Seconds</label>
+            <Input id="seconds" class="input" @value={{this.seconds}} @type="number" @min="0" @max="59" @maxlength="2"/>
+        </div>
+    </div>
+    <div class="control">
+        <button class="button is-primary" {{action "submit"}}>Add</button>
+    </div>
+</form>
+<hr>
+<nav class="level no-print is-mobile">
+    <div class="left-level">
+        <h3 class="title">Results</h3>
+    </div>
+    <div class="right-level">
+        <button class="button" {{action "reverseOrder"}}>{{fa-icon (if this.isResultsReversed "sort-numeric-up" "sort-numeric-down")}}</button>
+    </div>
+</nav>
+{{#unless this.results.length}}
+    <div class="notification is-warning">{{fa-icon "exclamation-triangle" classNames="is-large fa-lg"}}&nbsp;No Results</div>
+{{/unless}}
+<div class="content">
+    <nav class="panel results {{if this.isResultsReversed "reversed"}}">
+        {{#each this.results as |result|}}
+            <div class="panel-block">
+                {{result.place}}. {{result.time}}
+            </div>
+        {{/each}}
+    </nav>
+</div>

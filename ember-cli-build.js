@@ -7,6 +7,8 @@ module.exports = function(defaults) {
     // Add options here
   });
 
+  app.import('node_modules/animate.css/animate.css');
+
   // Use `app.import` to add additional libraries to the generated
   // output files.
   //

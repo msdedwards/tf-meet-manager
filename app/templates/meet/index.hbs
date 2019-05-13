@@ -1,0 +1,36 @@
+<nav class="level no-print">
+    <div class="left-level">
+        <h1 class="title no-print">{{this.model.name}}</h1>
+    </div>
+    <div class="right-level">
+        <button class="button no-print is-secondary" {{action "togglePrintPreview"}}>
+            View Print Page
+        </button>
+        {{#link-to "meet.input" class="button is-primary"}}
+            Input meet results
+        {{/link-to}}
+    </div>
+</nav>
+{{#if this.displayPrintPreview}}
+    <PrintPreview @entries={{this.model.entries}} />
+{{else}}
+    {{#if this.model.entries.length}}
+        <table class="table is-fullwidth is-bordered">
+            <tbody>
+                {{#each this.model.entries as |entry|}}
+                    <tr>
+                        <td>
+                            {{fa-icon "running"}}&nbsp;{{entry.FirstName}} {{entry.LastName}}
+                            <span class="tag is-pulled-right">{{entry.TeamCode}}</span>
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    {{else}}
+        <h3>No Entries</h3>
+        {{#link-to "meets.import"}}
+            Import a Meet
+        {{/link-to}}
+    {{/if}}
+{{/if}}

@@ -1,0 +1,4 @@
+<div class="print-label">
+    <h3>{{@entry.TeamCode}} - {{@entry.LastName}}, {{@entry.FirstName}}</h3>
+    <svg alt="bib number barcode" class="barcode" id="barcode{{@entry.bibAddend}}" {{barcode @entry.bibAddend}}/>
+</div>

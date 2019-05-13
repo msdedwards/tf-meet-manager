@@ -1,0 +1,16 @@
+{{!-- <Input type="text" @value={{this.name}} /> --}}
+<div class="file is-boxed is-primary">
+    <label class="file-label">
+        <Input class="file-input" id="input" type="file" accept=".csv" name="CSV File" onchange={{action this.uploadCSV preventDefault=true}} />
+        <span class="file-cta">
+            <span class="file-label">
+                Choose a file…
+            </span>
+        </span>
+        {{#if this.name}}
+            <span class="file-name">
+                {{this.name}}
+            </span>
+        {{/if}}
+    </label>
+</div>

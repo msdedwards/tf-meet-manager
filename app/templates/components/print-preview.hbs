@@ -1,0 +1,8 @@
+{{#each this.pagedEntries as |page|}}
+    <div class="print-header"></div>
+    <div class="page">
+        {{#each page as |entry|}}
+            <PrintLabel @entry={{entry}} />
+        {{/each}}
+    </div>
+{{/each}}

@@ -6,6 +6,18 @@ const Router = EmberRouter.extend({
   rootURL: config.rootURL
 });
 
-Router.map(function() {});
+Router.map(function() {
+  this.route('meets', function() {
+    this.route('import');
+  });
+  this.route('meet', {path: 'meet/:meet_id'}, function() {
+    this.route('print');
+    this.route('input', function() {
+      this.route('place');
+      this.route('time');
+      this.route('manual');
+    });
+  });
+});
 
 export default Router;

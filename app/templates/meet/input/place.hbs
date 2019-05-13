@@ -1,0 +1,10 @@
+<h1 class="title">Scan Bib Barcodes</h1>
+
+<Detector @type="barcode" @onDetection={{action "onDetection"}} />
+
+<h3>Found Barcodes</h3>
+<p>
+    {{#each this.barcodes as |barcode|}}
+        {{barcode.rawValue}} -- {{barcode.entry.FirstName}} {{barcode.entry.LastName}}
+    {{/each}}
+</p>

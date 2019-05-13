@@ -1,0 +1,25 @@
+<nav class="level is-mobile">
+    <div class="level-left">
+        <h1 class="title">Meets</h1>
+    </div>
+    <div class="level-right">
+        <div class="level-item">
+            {{#link-to "meets.import" class="button is-primary"}}
+                Import a new meet
+            {{/link-to}}
+        </div>
+    </div>
+</nav>  
+<nav class="panel">
+    <p class="panel-heading">
+        Meets
+    </p>
+    {{#each this.model as |item|}}
+        {{#link-to "meet" item class="panel-block"}}
+            {{item}}
+        {{/link-to}}
+        {{!-- {{#link-to "meet.input" item}}
+            Input results for {{item}}
+        {{/link-to}} --}}
+    {{/each}}
+</nav>
