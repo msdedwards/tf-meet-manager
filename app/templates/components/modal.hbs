@@ -1,0 +1,12 @@
+<div class="modal {{if @this.isActive "is-active" ""}}">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">{{@title}}</p>
+            <button class="delete" aria-label="close" {{action this.closeModal}}></button>
+        </header>
+        <section class="modal-card-body">
+            {{yield}}
+        </section>
+    </div>
+</div>

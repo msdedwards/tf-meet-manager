@@ -1,4 +1,15 @@
 {
-    "editor.renderWhitespace": "all",
-    // "files.associations": { "*.hbs": "html" }
+  "files.autoSave": "onFocusChange",
+  "editor.tabSize": 2,
+  "editor.renderWhitespace": "all",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "html.format.indentHandlebars": true,
+  "search.exclude": {
+    "**/bower_components": true,
+    "**/dist": true,
+    "**/node_modules": true,
+    "**/semantic": true,
+    "**/tmp": true
+  }
 }

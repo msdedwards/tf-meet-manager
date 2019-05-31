@@ -9,17 +9,20 @@ export default class CsvUploadComponent extends Component {
     @service db;
     @tracked name;
     @action
-    async uploadCSV({currentTarget}) {
+    async uploadCSV({ currentTarget }) {
         let file = currentTarget.files[0];
         this.name = file.name;
-        this.readFile(file).then(({data}) => {
+        this.readFile(file).then(({ data }) => {
             let meet = {
-                entries: data,
                 name: this.name
-            }
-            this.db.addMeet(meet).then(() => {
+            };
+            this.db.addMeet(meet).then((meetId) => {
                 console.log("added meet and entries");
+                this.db.addEntries(data, meetId).then(() => {
+                    console.log("entries added");
+                });
             });
+
         });
     }
     didInsertElement() {
@@ -31,8 +34,8 @@ export default class CsvUploadComponent extends Component {
         return new Promise(function (resolve, reject) {
             parse(file, {
                 header: true,
-                complete: function(results) { resolve(results);},
-                error: function(e) { reject(e.target.result);},
+                complete: function (results) { resolve(results); },
+                error: function (e) { reject(e.target.result); },
             });
         });
     }

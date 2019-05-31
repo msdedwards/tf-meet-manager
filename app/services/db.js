@@ -6,7 +6,20 @@ export default class DbService extends Service {
         upgrade(db) {
             // Create a store of objects
             db.createObjectStore('meets', {
-                keyPath: 'name',
+                keyPath: 'id',
+                autoIncrement: true
+            });
+            var entriesStore = db.createObjectStore("entries", {
+                keyPath: 'id',
+                autoIncrement: true
+            });
+            db.createObjectStore('results', {
+                keyPath: 'id',
+                autoIncrement: true
+            });
+            entriesStore.createIndex("meetId", "meetId", {
+                unique: false,
+                multiEntry: true
             });
             // Create an index on the 'date' property of the objects.
             // store.createIndex('FirstName', 'string');
@@ -21,22 +34,35 @@ export default class DbService extends Service {
         let idb = await this.idb;
         idb.add('entries', entry);
     }
-    
-    async addMeet(meet) {
+
+    async addEntries(entries, meetId) {
         let idb = await this.idb;
-        idb.add('meets', meet);
+        const tx = idb.transaction('entries', 'readwrite');
+        for (let i = 0; i < entries.length; i++) {
+            tx.store.add({ meetId, ...entries[i] });
+        }
+        await tx.done;
     }
 
-    async getMeet(meetName) {
+    async addMeet(meet) {
         let idb = await this.idb;
-        return idb.get('meets', meetName).then((data) => {
-            console.log({data});
-            return data;
-        });
+        return idb.add('meets', meet);
+    }
+
+    async getMeet(meetId) {
+        let idb = await this.idb;
+        return idb.get('meets', meetId);
     }
 
     async getAllMeets() {
         let idb = await this.idb;
-        return idb.getAllKeys('meets');
+        return idb.getAll('meets');
+    }
+
+    async getEntriesByMeetId(meetId) {
+        let idb = await this.idb;
+        var tx = idb.transaction('entries', 'readonly')
+        var index = tx.store.index('meetId')
+        return await index.getAll(Number(meetId));
     }
 }

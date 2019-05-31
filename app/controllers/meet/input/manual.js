@@ -35,7 +35,6 @@ export default class MeetInputManualController extends Controller {
         });
         this.resetInputs();
         this.results = this.results;
-        console.log(this.results);
         this.place++;
     }
 }

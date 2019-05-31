@@ -1,6 +1,6 @@
 <nav class="level no-print">
     <div class="left-level">
-        <h1 class="title no-print">{{this.model.name}}</h1>
+        <h1 class="title no-print">{{this.model.meet.name}}</h1>
     </div>
     <div class="right-level">
         <button class="button no-print is-secondary" {{action "togglePrintPreview"}}>
@@ -21,6 +21,7 @@
                     <tr>
                         <td>
                             {{fa-icon "running"}}&nbsp;{{entry.FirstName}} {{entry.LastName}}
+                            <button class="button" {{action "showDetails" entry}}>Show Details</button>
                             <span class="tag is-pulled-right">{{entry.TeamCode}}</span>
                         </td>
                     </tr>
@@ -34,3 +35,12 @@
         {{/link-to}}
     {{/if}}
 {{/if}}
+<Modal @isActive={{this.isActive}} @close={{action this.hideDetails}}
+    @title="{{this.activeEntry.FirstName}} {{this.activeEntry.LastName}}">
+    <div class="content">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
+        <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
+        <br>
+        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+    </div>
+</Modal>

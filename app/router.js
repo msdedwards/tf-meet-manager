@@ -9,6 +9,7 @@ const Router = EmberRouter.extend({
 Router.map(function() {
   this.route('meets', function() {
     this.route('import');
+    this.route('download');
   });
   this.route('meet', {path: 'meet/:meet_id'}, function() {
     this.route('print');

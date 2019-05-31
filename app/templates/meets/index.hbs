@@ -9,14 +9,14 @@
             {{/link-to}}
         </div>
     </div>
-</nav>  
+</nav>
 <nav class="panel">
     <p class="panel-heading">
         Meets
     </p>
     {{#each this.model as |item|}}
-        {{#link-to "meet" item class="panel-block"}}
-            {{item}}
+        {{#link-to "meet" item.id class="panel-block"}}
+            {{item.name}}
         {{/link-to}}
         {{!-- {{#link-to "meet.input" item}}
             Input results for {{item}}
