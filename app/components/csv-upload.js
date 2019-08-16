@@ -10,32 +10,33 @@ export default class CsvUploadComponent extends Component {
     @tracked name;
     @action
     async uploadCSV({ currentTarget }) {
-        let file = currentTarget.files[0];
-        this.name = file.name;
-        this.readFile(file).then(({ data }) => {
+        try {
+            let file = currentTarget.files[0];
+            this.name = file.name;
+            var entries = await this.readFile(file);
             let meet = {
-                name: this.name
+                name: this.name,
+                hasInputNames: false,
+                hasInputTimes: false
             };
-            this.db.addMeet(meet).then((meetId) => {
-                console.log("added meet and entries");
-                this.db.addEntries(data, meetId).then(() => {
-                    console.log("entries added");
-                });
-            });
+            meet.divisions = new Set(entries.data.map((item) => item.DivNum))
 
-        });
-    }
-    didInsertElement() {
-        super.didInsertArguments(...arguments);
-        console.log('didInsertElement');
+            var meetId = await this.db.addMeet(meet);
+
+            await this.db.addEntries(entries.data, meetId);
+        } catch (error) {
+            throw error;
+        }
     }
 
     readFile(file) {
         return new Promise(function (resolve, reject) {
             parse(file, {
                 header: true,
-                complete: function (results) { resolve(results); },
-                error: function (e) { reject(e.target.result); },
+                skipEmptyLines: true,
+                transformHeader: (header) => header.split(' ')[0],
+                complete: resolve,
+                error: (e) => reject(e.target.result),
             });
         });
     }

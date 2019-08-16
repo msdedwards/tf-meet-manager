@@ -6,17 +6,21 @@ const Router = EmberRouter.extend({
   rootURL: config.rootURL
 });
 
-Router.map(function() {
-  this.route('meets', function() {
-    this.route('import');
+Router.map(function () {
+  this.route('meets', function () {
     this.route('download');
   });
-  this.route('meet', {path: 'meet/:meet_id'}, function() {
+  this.route('import');
+  this.route('meet', { path: 'meet/:meet_id' }, function () {
     this.route('print');
-    this.route('input', function() {
-      this.route('place');
-      this.route('time');
-      this.route('manual');
+    this.route('input', function () {
+      this.route('division', { path: 'division/:division_id' }, function () {
+        this.route('place');
+        this.route('time');
+        this.route('manual');
+        this.route('place-manual');
+      });
+      this.route('choose');
     });
   });
 });

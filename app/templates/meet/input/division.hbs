@@ -1,0 +1,13 @@
+<h1 class="title">Input Race Results</h1>
+<div class="tabs is-fullwidth">
+    <ul>
+        {{#each this.model.meet.divisions as |division|}}
+            <li>
+                {{#link-to this.target.currentPath division activeClass="is-active" tagName="li"}}
+                    <a>Race {{division}}</a>
+                {{/link-to}}
+            </li>
+        {{/each}}
+    </ul>
+</div>
+{{outlet}}

@@ -1,46 +1,63 @@
-<nav class="level no-print">
-    <div class="left-level">
+<section class="section">
+    <div class="container is-upscaled-mobile">
         <h1 class="title no-print">{{this.model.meet.name}}</h1>
+        <nav class="level no-print is-mobile">
+            <div class="left-level">
+                <button class="button no-print is-secondary" {{action "togglePrintPreview"}}>
+                    {{if this.displayPrintPreview "View Entries" "View Print Page"}}
+                </button>
+                {{#link-to "meet.input.choose" class="button is-primary"}}
+                    Input meet results
+                {{/link-to}}
+            </div>
+        </nav>
     </div>
-    <div class="right-level">
-        <button class="button no-print is-secondary" {{action "togglePrintPreview"}}>
-            View Print Page
-        </button>
-        {{#link-to "meet.input" class="button is-primary"}}
-            Input meet results
-        {{/link-to}}
-    </div>
-</nav>
+</section>
 {{#if this.displayPrintPreview}}
     <PrintPreview @entries={{this.model.entries}} />
 {{else}}
-    {{#if this.model.entries.length}}
-        <table class="table is-fullwidth is-bordered">
-            <tbody>
-                {{#each this.model.entries as |entry|}}
-                    <tr>
-                        <td>
-                            {{fa-icon "running"}}&nbsp;{{entry.FirstName}} {{entry.LastName}}
-                            <button class="button" {{action "showDetails" entry}}>Show Details</button>
-                            <span class="tag is-pulled-right">{{entry.TeamCode}}</span>
-                        </td>
-                    </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    {{else}}
-        <h3>No Entries</h3>
-        {{#link-to "meets.import"}}
-            Import a Meet
-        {{/link-to}}
-    {{/if}}
+    <section class="section no-padding-top">
+        <div class="container is-upscaled-mobile">
+            {{#if this.model.entries.length}}
+                <table class="table is-fullwidth">
+                    <tbody>
+                        {{#each this.model.entries as |entry|}}
+                            <tr>
+                                <td>
+                                    <span class="tag is-medium">{{entry.TeamCode}}</span>
+                                </td>
+                                <td>
+                                    {{entry.FirstName}} {{entry.LastName}}
+                                </td>
+                                <td>
+                                    <button {{action "showDetails" entry}} class="button is-pulled-right">
+                                        <span class="icon has-text-info">
+                                            {{fa-icon "info-circle" size="lg"}}
+                                        </span>
+                                    </button>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            {{else}}
+                <h3>No Entries</h3>
+                {{#link-to "import"}}
+                    Import a Meet
+                {{/link-to}}
+            {{/if}}
+        </div>
+    </section>
 {{/if}}
 <Modal @isActive={{this.isActive}} @close={{action this.hideDetails}}
     @title="{{this.activeEntry.FirstName}} {{this.activeEntry.LastName}}">
     <div class="content">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-        <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
-        <br>
-        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+        <ul>
+            <li>Gender: {{this.activeEntry.Gender}}</li>
+            <li>Grade: {{this.activeEntry.Grade}}</li>
+            <li>Team: {{this.activeEntry.TeamName}}</li>
+            <li>Division: {{this.activeEntry.Division}}</li>
+            <li>Distance (M): {{this.activeEntry.Meters}}</li>
+        </ul>
     </div>
 </Modal>

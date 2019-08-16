@@ -1,0 +1,10 @@
+<h1 class="subtitle">Scan Timer Paper</h1>
+
+<Input @value={{this.numRunners}} type="number" />
+
+<Detector @type="text" @onDetection={{action "onDetection"}} />
+
+<h3>Found Times</h3>
+{{#each this.times as |time index|}}
+    {{index}} -- {{time}} <br>
+{{/each}}

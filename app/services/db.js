@@ -13,13 +13,20 @@ export default class DbService extends Service {
                 keyPath: 'id',
                 autoIncrement: true
             });
-            db.createObjectStore('results', {
+            var resultStore = db.createObjectStore('results', {
                 keyPath: 'id',
                 autoIncrement: true
             });
-            entriesStore.createIndex("meetId", "meetId", {
+            entriesStore.createIndex('meetId', 'meetId', {
                 unique: false,
-                multiEntry: true
+            });
+            entriesStore.createIndex('meetId, DivNum, resultId', ['meetId', 'DivNum', 'resultId'], {
+                unique: false,
+                multiEntry: false
+            });
+            resultStore.createIndex('meetId, DivNum', ['entry.meetId', 'entry.DivNum'], {
+                unique: false,
+                multiEntry: false
             });
             // Create an index on the 'date' property of the objects.
             // store.createIndex('FirstName', 'string');
@@ -32,16 +39,28 @@ export default class DbService extends Service {
 
     async addEntry(entry) {
         let idb = await this.idb;
+        idb.put()
         idb.add('entries', entry);
     }
 
     async addEntries(entries, meetId) {
         let idb = await this.idb;
         const tx = idb.transaction('entries', 'readwrite');
+        var item;
         for (let i = 0; i < entries.length; i++) {
-            tx.store.add({ meetId, ...entries[i] });
+            item = {
+                meetId,
+                resultId: -1,
+                ...entries[i]
+            };
+            tx.store.add(item);
         }
         await tx.done;
+    }
+
+    async updateEntry(entry) {
+        let idb = await this.idb;
+        idb.put('entries', entry);
     }
 
     async addMeet(meet) {
@@ -49,9 +68,14 @@ export default class DbService extends Service {
         return idb.add('meets', meet);
     }
 
+    async addResult(result) {
+        let idb = await this.idb;
+        return idb.add('results', result);
+    }
+
     async getMeet(meetId) {
         let idb = await this.idb;
-        return idb.get('meets', meetId);
+        return idb.get('meets', Number(meetId));
     }
 
     async getAllMeets() {
@@ -63,6 +87,27 @@ export default class DbService extends Service {
         let idb = await this.idb;
         var tx = idb.transaction('entries', 'readonly')
         var index = tx.store.index('meetId')
-        return await index.getAll(Number(meetId));
+        return index.getAll(Number(meetId));
+    }
+
+    // async getEntriesByDivisionNum(meetId, DivNum) {
+    //     let idb = await this.idb;
+    //     var tx = idb.transaction('entries', 'readonly')
+    //     var index = tx.store.index('meetId, DivNum, hasResult');
+    //     return index.getAll([Number(meetId), DivNum]);
+    // }
+
+    async getEntries(meetId, DivNum, resultId = -1) {
+        let idb = await this.idb;
+        var tx = idb.transaction('entries', 'readonly')
+        var index = tx.store.index('meetId, DivNum, resultId');
+        return index.getAll([Number(meetId), DivNum, resultId]);
+    }
+
+    async getResultsByDivisionNum(meetId, DivNum) {
+        let idb = await this.idb;
+        var tx = idb.transaction('results', 'readonly')
+        var index = tx.store.index('meetId, DivNum')
+        return index.getAll([Number(meetId), DivNum]);
     }
 }

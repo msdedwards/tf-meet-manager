@@ -1,0 +1,63 @@
+<h1 class="subtitle">Input Bib Numbers Manually</h1>
+<div class="content">
+    <p>Results are saved automatically</p>
+</div>
+<div class="columns is-mobile is-gapless">
+    <div class="column">
+        <nav class="level no-print is-mobile">
+            <div class="left-level">
+                <h3 class="title">Entries</h3>
+            </div>
+        </nav>
+        <table class="table is-fullwidth is-striped">
+            <tbody>
+                {{#each this.entries as |entry index|}}
+                    <tr>
+                        <th>
+                            {{entry.id}}
+                        </th>
+                        <td>
+                            {{entry.FirstName}}
+                        </td>
+                        <td>
+                            <button class="button" {{action "submit" entry index}}>
+                                <span class="icon">
+                                    {{fa-icon "chevron-circle-right"}}
+                                </span>
+                            </button>
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div class="column">
+        <nav class="level no-print is-mobile">
+            <div class="left-level">
+                <h3 class="title">Results</h3>
+            </div>
+            <div class="right-level">
+                <button class="button" {{action "reverseOrder"}}>
+                    {{fa-icon (if this.isResultsReversed "sort-numeric-up" "sort-numeric-down")}}
+                </button>
+            </div>
+        </nav>
+        <table class="table is-fullwidth is-striped">
+            <tbody>
+                {{#each this.results as |result|}}
+                    <tr>
+                        <th>
+                            {{result.place}}
+                        </th>
+                        <td>
+                            {{result.entry.FirstName}}
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<Modal @isActive={{this.isActive}} @close={{action this.hideDetails}}
+    @title="{{this.activeEntry.FirstName}} {{this.activeEntry.LastName}}">
+</Modal>

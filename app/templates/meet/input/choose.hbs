@@ -1,0 +1,43 @@
+<h1 class="title">Choose Input Method</h1>
+<div class="content">
+    {{#if this.model.meet.hasInputNames}}
+        {{#if this.model.meet.hasInputTimes}}
+            <p>Has completed input, verify and produce csv</p>
+        {{else}}
+            <h1 class="subtitle is-4">Scan Timer Paper</h1>
+            <p>
+                Use your phone to scan the timer paper from your compatible Seiko timer to associate
+            </p>
+            {{#link-to "meet.input.division.time" this.model "1" class="button is-primary is-large is-fullwidth"}}
+                Scan Timer Paper
+            {{/link-to}}
+            <hr>
+            <h1 class="subtitle is-4">Input Time Manually</h1>
+            <p>Input the times, manually, copy paste, scan timer paper</p>
+            {{#link-to "meet.input.division.manual" this.model "1" class="button is-primary is-large is-fullwidth"}}
+                Input Manually
+            {{/link-to}}
+        {{/if}}
+    {{else}}
+        <h1 class="subtitle is-4">Scan Bib Number Barcodes</h1>
+        <p>
+            Use your phone to scan the barcodes on the runners' bibs in the order they finished to
+            associate their names
+            with the place they
+            finished in the race.
+        </p>
+        {{#link-to "meet.input.division.place" this.model "1" class="button is-primary is-large is-fullwidth"}}
+            Scan Barcodes
+        {{/link-to}}
+        <hr>
+        <h1 class="subtitle is-4">Input Bib Numbers Manually</h1>
+        <p>
+            Type in bib numbers of the runners in the order they finished to associate their names with the
+            place they
+            finished in the race.
+        </p>
+        {{#link-to "meet.input.division.place-manual" this.model "1"class="button is-primary is-large is-fullwidth"}}
+            Input Manually
+        {{/link-to}}
+    {{/if}}
+</div>

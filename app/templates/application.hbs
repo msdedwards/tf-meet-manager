@@ -1,20 +1,21 @@
 <nav class="navbar is-dark no-print" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        {{#link-to "index" class="navbar-item no-print"}}
+        {{#link-to "index" class="navbar-item no-print" activeClass="is-active"}}
             XC Meet Manager
         {{/link-to}}
-        <a role="button" {{action "toggle"}} class="navbar-burger burger {{if this.isActive "is-active"}}" aria-label="menu" aria-expanded={{this.isActive}} data-target="main-menu">
+        <a role="button" {{action "toggle"}} class="navbar-burger burger {{if this.isActive "is-active"}}"
+            aria-label="menu" aria-expanded={{this.isActive}} data-target="main-menu">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
         </a>
     </div>
-    <div id="main-menu" class="navbar-menu {{if this.isActive "is-active"}} animated slideInDown">
+    <div id="main-menu" class="navbar-menu {{if this.isActive "is-active"}}">
         <div class="navbar-start">
-            {{#link-to "meets" class="navbar-item no-print"}}
+            {{#link-to "meets" class="navbar-item no-print" activeClass="is-active" }}
                 Meets
             {{/link-to}}
-            {{#link-to "meets.import" class="navbar-item no-print"}}
+            {{#link-to "import" class="navbar-item no-print" activeClass="is-active" }}
                 Import a Meet
             {{/link-to}}
         </div>

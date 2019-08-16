@@ -4,22 +4,22 @@
     </div>
     <div class="level-right">
         <div class="level-item">
-            {{#link-to "meets.import" class="button is-primary"}}
+            {{#link-to "import" class="button is-primary"}}
                 Import a new meet
             {{/link-to}}
         </div>
     </div>
 </nav>
-<nav class="panel">
-    <p class="panel-heading">
-        Meets
-    </p>
-    {{#each this.model as |item|}}
-        {{#link-to "meet" item.id class="panel-block"}}
-            {{item.name}}
-        {{/link-to}}
-        {{!-- {{#link-to "meet.input" item}}
-            Input results for {{item}}
-        {{/link-to}} --}}
-    {{/each}}
-</nav>
+<table class="table is-fullwidth">
+    <tbody>
+        <tr>
+            {{#each this.model as |item|}}
+                <td>
+                    {{#link-to "meet" item.id}}
+                        {{item.name}}
+                    {{/link-to}}
+                </td>
+            {{/each}}
+        </tr>
+    </tbody>
+</table>
