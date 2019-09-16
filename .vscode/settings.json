@@ -11,5 +11,6 @@
     "**/node_modules": true,
     "**/semantic": true,
     "**/tmp": true
-  }
+  },
+  "deepcode.review.results.hideInformationIssues": false
 }
