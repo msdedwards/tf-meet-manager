@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(environment) {
+module.exports = function (environment) {
   let ENV = {
     modulePrefix: 'xc-meet-manager',
     environment,
@@ -18,6 +18,7 @@ module.exports = function(environment) {
       }
     },
     EmberENV: {
+      // ENABLE_ALL_FEATURES: true,
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. EMBER_NATIVE_DECORATOR_SUPPORT: true

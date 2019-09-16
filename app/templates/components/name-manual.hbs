@@ -1,4 +1,3 @@
-<h1 class="subtitle">Input Bib Numbers Manually</h1>
 <div class="content">
     <p>Results are saved automatically</p>
 </div>
@@ -44,13 +43,20 @@
         </nav>
         <table class="table is-fullwidth is-striped">
             <tbody>
-                {{#each this.results as |result|}}
+                {{#each this.results as |result index|}}
                     <tr>
-                        <th>
-                            {{result.place}}
-                        </th>
                         <td>
-                            {{result.entry.FirstName}}
+                            {{result.place}}
+                        </td>
+                        <td>
+                            {{result.entry.id}} {{result.entry.FirstName}}
+                        </td>
+                        <td>
+                            <button class="button" {{action "swapUp" result index}}>
+                                <span class="icon">
+                                    {{fa-icon "chevron-circle-up"}}
+                                </span>
+                            </button>
                         </td>
                     </tr>
                 {{/each}}
@@ -59,5 +65,5 @@
     </div>
 </div>
 <Modal @isActive={{this.isActive}} @close={{action this.hideDetails}}
-    @title="{{this.activeEntry.FirstName}} {{this.activeEntry.LastName}}">
+    @title=" {{this.activeEntry.FirstName}} {{this.activeEntry.LastName}}">
 </Modal>

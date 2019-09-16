@@ -1,0 +1,61 @@
+<h1 class="subtitle">Scan Timer Paper</h1>
+
+<Detector @type="text" @onDetection={{action this.onDetection}} />
+
+<nav class="level no-print is-mobile">
+    <div class="left-level">
+        <h3 class="title">Results</h3>
+    </div>
+    <div class="right-level">
+        <button class="button" {{action "reverseOrder"}}>
+            {{fa-icon (if this.isResultsReversed "sort-numeric-up" "sort-numeric-down")}}
+        </button>
+    </div>
+</nav>
+{{#unless this.results.length}}
+    <div class="notification is-warning">
+        {{fa-icon "exclamation-triangle" classNames="is-large fa-lg"}}&nbsp;No Results
+    </div>
+{{/unless}}
+<div class="content">
+    <nav class="panel results {{if this.isResultsReversed "reversed"}}">
+        {{#each this.results as |result|}}
+            <div class="panel-block">
+                {{result.place}}. {{result.entry.FirstName}} {{result.entry.LastName}}
+                <span>
+                    {{#if result.time}}
+                        <span class="tag is-success is-medium">{{result.time}}</span>
+                    {{else}}
+                        <span class="tag is-warning is-medium">No Time</span>
+                    {{/if}}
+                </span>
+            </div>
+        {{/each}}
+    </nav>
+</div>
+<Modal @isActive={{this.isActive}} @title="Validate Scanned Times" @close={{action this.hideConfirmation}}>
+    <div class="content">
+        <p>
+            Choose the entries in the order the runners placed. When finished close the modal and continue scanning
+            barcodes.
+        </p>
+
+        <div class="content">
+            <nav class="panel results">
+                {{#each this.activeTimes as |time|}}
+                    <div class="panel-block">
+                        {{time.raw}}
+                        <span>
+                            {{#if time.raw}}
+                                <span class="tag is-success is-medium">{{time.place}}.
+                                    {{time.hours}}:{{time.minutes}}:{{time.seconds}}.{{time.milliseconds}}</span>
+                            {{else}}
+                                <span class="tag is-warning is-medium">No Time</span>
+                            {{/if}}
+                        </span>
+                    </div>
+                {{/each}}
+            </nav>
+        </div>
+    </div>
+</Modal>

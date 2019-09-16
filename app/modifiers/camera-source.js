@@ -1,8 +1,6 @@
-import functionalModifier from 'ember-functional-modifiers';
+import makeFunctionalModifier from 'ember-functional-modifiers';
 
-export function cameraSource(element, [srcObject]) {
+export default makeFunctionalModifier((element, [srcObject]) => {
   element.srcObject = srcObject;
   element.autoplay = true;
-}
-
-export default functionalModifier(cameraSource);
+});
