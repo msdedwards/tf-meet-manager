@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
 
 export default class ApplicationRoute extends Route {
-    beforeModel() {
-        this._super(...arguments);
+    beforeModel(...args) {
+        this._super(args);
     }
 }

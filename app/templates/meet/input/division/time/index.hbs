@@ -1,0 +1,22 @@
+<h1 class="title">Input Time & Place</h1>
+<div class="content">
+    <p>
+        To input results for a meet three pieces of information must be combined together: a runner's name, place, and
+        time. Usually their place is used to connect their name with their time. The buttons below allow meet officials
+        to associate runners' names with places, and then places with times.
+    </p>
+    <h1 class="subtitle is-5">Input Time Manually</h1>
+    <p>Input the times, manually, copy paste, scan timer paper</p>
+    {{#link-to "meet.input.division.time.manual" this.model "1" class="button is-primary is-large is-fullwidth"}}
+        Input Manually
+    {{/link-to}}
+    <hr>
+    <h1 class="subtitle is-5">Scan Timer Paper</h1>
+    <p>
+        Use your phone to scan the timer paper from your compatible Seiko timer to associate
+    </p>
+    {{#link-to "meet.input.division.time.auto" this.model "1" class="button is-primary is-large is-fullwidth"}}
+        Scan Timer Paper
+    {{/link-to}}
+    <hr>
+</div>

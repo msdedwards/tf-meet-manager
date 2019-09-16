@@ -1,4 +1,4 @@
-
+/* global BarcodeDetector, TextDetector */
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
@@ -15,14 +15,22 @@ export default class DetectorComponent extends Component {
                 audio: false,
                 video: {
                     facingMode: "environment",
-                    width: { ideal: 1280 },
-                    height: { ideal: 720 }
+                    width: {
+                        min: 480,
+                        max: 1280,
+                        ideal: 1280
+                    },
+                    height: {
+                        min: 320,
+                        max: 720,
+                        ideal: 720
+                    }
                 }
             });
             this.isStreaming = true;
-        } catch(err) {
+        } catch (err) {
             this.isStreaming = false;
-            console.error({err});
+            console.error({ err });
             alert('Failed to initialize camera');
         }
     }
@@ -34,26 +42,26 @@ export default class DetectorComponent extends Component {
             alert('No camera!');
             return;
         }
-      
+
         if (type === "text" && typeof window.TextDetector === "undefined") {
             alert('No text detection!');
             return;
         }
 
-        if (type === "barcode"  && typeof window.BarcodeDetector === "undefined") {
+        if (type === "barcode" && typeof window.BarcodeDetector === "undefined") {
             alert('No barcode detection!');
             return;
         }
 
         this.detectionType = type;
-        this.initializeStream();    
+        this.initializeStream();
     }
 
     @action
     scan() {
         var detector;
         if (this.detectionType === "barcode") {
-            detector = new BarcodeDetector({ formats:['code_128'] });
+            detector = new BarcodeDetector({ formats: ['code_128'] });
         } else if (this.detectionType === "text") {
             detector = new TextDetector();
         } else {
@@ -61,12 +69,12 @@ export default class DetectorComponent extends Component {
         }
         let capturer = new ImageCapture(this.stream.getVideoTracks()[0]);
         capturer.grabFrame().then(frame => {
-            detector.detect(frame).then((detected) => {
-                this.args.onDetection(detected);
-            }).catch((err) => {
-                alert(`Failed ${this.detectionType} detection`);
-                console.error({err});
-            });
+            detector.detect(frame)
+                .then(this.args.onDetection)
+                .catch((err) => {
+                    alert(`Failed ${this.detectionType} detection`);
+                    throw err;
+                });
         })
     }
 

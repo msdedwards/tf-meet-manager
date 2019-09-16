@@ -1,0 +1,52 @@
+<h1 class="subtitle">
+    Scan Bib Number Barcodes
+</h1>
+<Detector @type="barcode" @onDetection={{action this.onDetection}} />
+<button class="button" {{action this.inputManually}}>
+    Input Bib Number Manually
+</button>
+<div class="column">
+    <nav class="level no-print is-mobile">
+        <div class="left-level">
+            <h3 class="title">Results</h3>
+        </div>
+        <div class="right-level">
+            <button class="button" {{action "reverseOrder"}}>
+                {{fa-icon (if this.isResultsReversed "sort-numeric-up" "sort-numeric-down")}}
+            </button>
+        </div>
+    </nav>
+    <table class="table is-fullwidth is-striped">
+        <tbody>
+            {{#each this.results as |result index|}}
+                <tr>
+                    <td>
+                        {{result.place}}
+                    </td>
+                    <td>
+                        {{result.entry.id}}
+                    </td>
+                    <td>
+                        {{result.entry.FirstName}}
+                    </td>
+                    <td>
+                        <button class="button" {{action "swapUp" result index}}>
+                            <span class="icon">
+                                {{fa-icon "chevron-circle-up"}}
+                            </span>
+                        </button>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+<Modal @isActive={{this.isActive}} @title={{this.activeTitle}} @close={{action this.hideConfirmation}}>
+    <div class="content">
+        <p>
+            Choose the entries in the order the runners placed. When finished close the modal and continue scanning
+            barcodes.
+        </p>
+        <NameManual @entries={{this.activeEntries}} @results={{this.results}} />
+    </div>
+</Modal>

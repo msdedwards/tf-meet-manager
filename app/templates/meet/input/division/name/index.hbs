@@ -1,0 +1,27 @@
+<h1 class="title">Input Names & Places</h1>
+<div class="content">
+    <p>
+        To input results for a meet three pieces of information must be combined together: a runner's name, place, and
+        time. Usually their place is used to connect their name with their time. The buttons below allow meet officials
+        to associate runners' names with places, and then places with times.
+    </p>
+    <hr>
+    <h1 class="subtitle is-5">Input Bib Numbers Manually</h1>
+    <p>
+        Type in bib numbers of the runners in the order they finished to associate their name with the place they
+        finished in the race.
+    </p>
+    {{#link-to "meet.input.division.name.manual" this.model "1"class="button is-primary is-large is-fullwidth"}}
+        Input Manually
+    {{/link-to}}
+    <hr>
+    <h1 class="subtitle is-5">Scan Bib Number Barcodes</h1>
+    <p>
+        Use your phone to scan the barcodes on the runners' bibs in the order they finished to associate their names
+        with the place they finished in the race.
+    </p>
+    {{#link-to "meet.input.division.name.auto" this.model "1" class="button is-primary is-large is-fullwidth"}}
+        Scan Barcodes
+    {{/link-to}}
+    <hr>
+</div>

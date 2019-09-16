@@ -15,12 +15,16 @@ Router.map(function () {
     this.route('print');
     this.route('input', function () {
       this.route('division', { path: 'division/:division_id' }, function () {
-        this.route('place');
-        this.route('time');
-        this.route('manual');
-        this.route('place-manual');
+        this.route('name', function () {
+          this.route('manual');
+          this.route('auto');
+        });
+        this.route('time', function () {
+          this.route('manual');
+          this.route('auto');
+        });
+        this.route('review');
       });
-      this.route('choose');
     });
   });
 });

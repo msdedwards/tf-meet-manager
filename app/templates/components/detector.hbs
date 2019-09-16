@@ -1,8 +1,13 @@
-
 {{#if this.isStreaming}}
-    <video {{camera-source this.stream}} />
-    <button class="button" {{action "scan"}}>Scan</button>
-    <button class="button" {{action "close"}}>Close Camera</button>
+    <section class="section video-section">
+        <video {{camera-source this.stream}} />
+        <div class="video-buttons">
+            <button class="button" {{action "scan"}}>Scan</button>
+            <button class="button" {{action "close"}}>Close Camera</button>
+        </div>
+    </section>
 {{else}}
-    <button class="button" {{action "init"}}>Initialize Camera</button>
+    <button class="button" {{action "init"}}>
+        Scan
+    </button>
 {{/if}}

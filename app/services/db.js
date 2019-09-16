@@ -63,6 +63,11 @@ export default class DbService extends Service {
         idb.put('entries', entry);
     }
 
+    async updateResult(result) {
+        let idb = await this.idb;
+        idb.put('results', result);
+    }
+
     async addMeet(meet) {
         let idb = await this.idb;
         return idb.add('meets', meet);

@@ -1,9 +1,13 @@
-<h1 class="subtitle">Input Results Manually</h1>
+<h1 class="subtitle">Input Time Manually</h1>
 <form>
     <div class="field">
         <div class="control">
             <label class="label" for="place">Place</label>
-            <Input class="input" id="place" @value={{this.place}} type="number" maxlength="4" />
+            <Input class="input {{if this.displayPlaceWarning "is-danger" ""}}" id="place" @value={{this.place}}
+                {{on "change" (fn this.placeChanged)}} type="number" max={{this.results.length}} />
+            {{#if this.displayPlaceWarning}}
+                <p class="help is-danger">Place is greater than number of results</p>
+            {{/if}}
             <p class="help">The place the runner finished in the race</p>
         </div>
     </div>
@@ -28,9 +32,9 @@
             <Input id="seconds" class="input" @value={{this.seconds}} @type="number" @min="0" @max="59"
                 @maxlength="2" />
         </div>
-    </div>
-    <div class="control">
-        <button class="button is-primary" {{action "submit"}}>Add</button>
+        <div class="control">
+            <button class="button is-primary" {{action "submit"}}>Add</button>
+        </div>
     </div>
 </form>
 <hr>
@@ -53,7 +57,14 @@
     <nav class="panel results {{if this.isResultsReversed "reversed"}}">
         {{#each this.results as |result|}}
             <div class="panel-block">
-                {{result.place}}. {{result.time}}
+                {{result.place}}. {{result.entry.FirstName}} {{result.entry.LastName}}
+                <span>
+                    {{#if result.time}}
+                        <span class="tag is-success is-medium">{{result.time}}</span>
+                    {{else}}
+                        <span class="tag is-warning is-medium">No Time</span>
+                    {{/if}}
+                </span>
             </div>
         {{/each}}
     </nav>

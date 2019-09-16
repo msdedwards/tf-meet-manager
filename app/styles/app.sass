@@ -1,71 +1,71 @@
-@import "bulma";
-
-$shadow: 0px 10px 20px hsla(0%, 0%, 0%, .15), 0px 3px 6px hsla(0%, 0%, 0%, .10);
-
+@import "bulma"
+$shadow: 0px 10px 20px hsla(0%, 0%, 0%, .15), 0px 3px 6px hsla(0%, 0%, 0%, .10)
 +mobile
-  .section
-    padding: 1.5rem;
-
+.section
+  padding: 1.5rem
 +tablet
   .container.is-upscaled-mobile
-    margin-left: 25%;
-    margin-right: 25%;
-    max-width: inherit;
-    width: inherit;
+    margin-left: 25%
+    margin-right: 25%
+    max-width: inherit
+    width: inherit
 
 .section.no-padding-top
-  padding-top: 0;
+  padding-top: 0
 
 .card.box
-  padding: 0;
-  overflow: hidden;
-  box-shadow: $shadow;
+  padding: 0
+  overflow: hidden
+  box-shadow: $shadow
 
 .button.icon.circle
-  border-radius: 50%;
-  text-align: center;
+  border-radius: 50%
+  text-align: center
 
 .box.is-primary-outlined
-  box-shadow: none;
+  box-shadow: none
   border: 1px solid $primary
 
 .page
-  display: grid;
-  grid-template-columns: repeat(3, 2.625in);
-  grid-template-rows: repeat(10, 1in);
-  gap: 0in 0.125in;
-  margin: 0in .1875in;
-  page-break-after: always;
-  break-after: always;
+  display: grid
+  grid-template-columns: repeat(3, 2.625in)
+  grid-template-rows: repeat(10, 1in)
+  gap: 0in 0.125in
+  margin: 0in .1875in
+  page-break-after: always
+  break-after: always
 
 .print-header, .print-footer
-  height: 0.5in;
-
+  height: 0.5in
 
 .print-label
-  text-align: center;
-  overflow: hidden;
-  padding: 0.0625in;
+  text-align: center
+  overflow: hidden
+  padding: 0.0625in
 
 .label > h3
-  margin: 0;
+  margin: 0
+
+.panel.results > .panel-block
+  justify-content: space-between
 
 @media print
   .no-print, .no-print *
-    display: none !important;
+    display: none !important
 
     body, section.section
-      margin: 0;
-      padding: 0;
-
-.results
-  display: flex;
-  flex-direction: column;
-
-.results.reversed
-  flex-direction: column-reverse;
-
+      margin: 0
+      padding: 0
 video
-  width: 100%;
-  max-width: 500px;
-  height: auto;
+  width: 100%
+  // height: auto
+  // max-height: 320px
+
+.video-section
+  background-color: darken(white, 5)
+  border-radius: 10px
+  position: sticky
+  top: -1px
+  z-index: 1
+  & > .video-buttons
+    position: relative
