@@ -7,9 +7,15 @@ module.exports = function (defaults) {
     sassOptions: {
       extension: 'sass'
     },
+    'bundle-analyzer': {
+      ignoreTestFiles: true,
+      ignore: [
+        '*-fastboot'
+      ]
+    }
   });
 
-  app.import('node_modules/animate.css/animate.css');
+  // app.import('node_modules/animate.css/animate.css');
 
   // Use `app.import` to add additional libraries to the generated
   // output files.

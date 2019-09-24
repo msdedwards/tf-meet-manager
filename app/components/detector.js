@@ -30,7 +30,6 @@ export default class DetectorComponent extends Component {
             this.isStreaming = true;
         } catch (err) {
             this.isStreaming = false;
-            console.error({ err });
             alert('Failed to initialize camera');
         }
     }

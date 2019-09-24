@@ -6,6 +6,7 @@ const Router = EmberRouter.extend({
   rootURL: config.rootURL
 });
 
+/** @this RouterDSL */
 Router.map(function () {
   this.route('meets', function () {
     this.route('download');

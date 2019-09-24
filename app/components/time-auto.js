@@ -20,13 +20,25 @@ export default class TimeAutoComponent extends Component {
     }
     this.activeTimes = this.activeTimes
     this.isActive = true;
-    console.log({ data });
+  }
+
+  @action
+  editTime(time) {
+    set(time, "isEditing", true);
+  }
+
+  @action
+  saveTime(time, index) {
+    this.activeTimes[index] = this.getTimeFromText(time.formatted)[0];
+    this.activeTimes = this.activeTimes;
+    //set(time, "isEditing", false);
   }
 
   getTimeFromText(segment) {
-    const regex = /(\d+)-(\d|O)?:? ?((?:\d|O)+)'? ?((?:\d|O)+) ?,?((?:\d|O)+)/gm;
+    const regex = /(\d+)-(\d|O)?:? ?((?:\d|O)+)'? ?’?((?:\d|O)+) ?,?((?:\d|O)+)/gm;
     let m;
     let result = [];
+    segment = segment.replace(/O/gm, "0");
     while ((m = regex.exec(segment)) !== null) {
       // This is necessary to avoid infinite loops with zero-width matches
       if (m.index === regex.lastIndex) {
@@ -36,11 +48,8 @@ export default class TimeAutoComponent extends Component {
       // The result can be accessed through the `m`-variable.
       result.push({
         raw: m[0],
-        place: m[1],
-        hours: m[2] || "0",
-        minutes: m[3] || "00",
-        seconds: m[4] || "00",
-        milliseconds: m[5] || "00"
+        formatted: `${m[1]}-${m[2] || "0"}:${m[3] || "00"}’${m[4] || "00"} ${m[5] || "00"}`,
+        isEditing: false
       });
     }
     return result;

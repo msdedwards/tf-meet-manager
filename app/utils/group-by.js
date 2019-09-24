@@ -1,4 +1,4 @@
-/*!
+/**
  * Group items from an array together by some criteria or value.
  * (c) 2019 Tom Bremmer (https://tbremer.com/) and Chris Ferdinandi (https://gomakethings.com), MIT License,
  * @param  {Array}           arr      The array to group items from

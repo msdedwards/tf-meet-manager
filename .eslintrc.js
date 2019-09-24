@@ -43,6 +43,9 @@ module.exports = {
       },
       plugins: ['node'],
       rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
+        "node/no-unpublished-require": ["error", {
+          "allowModules": ["ember-cli", "eslint-plugin-node"]
+        }]
         // add your custom rules and overrides for node files here
       })
     }

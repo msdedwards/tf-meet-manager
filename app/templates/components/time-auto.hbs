@@ -42,17 +42,33 @@
 
         <div class="content">
             <nav class="panel results">
-                {{#each this.activeTimes as |time|}}
+                {{#each this.activeTimes as |time index|}}
                     <div class="panel-block">
-                        {{time.raw}}
-                        <span>
+                        {{#if time.isEditing}}
+                            <div class="field has-addons">
+                                <div class="control">
+                                    <Input class="input" type="text" @value={{time.formatted}} />
+                                </div>
+                                <div class="control">
+                                    <button class="button is-info" {{action this.saveTime time index}}>
+                                        {{fa-icon "save"}}
+                                    </button>
+                                </div>
+                            </div>
+                        {{else}}
                             {{#if time.raw}}
-                                <span class="tag is-success is-medium">{{time.place}}.
-                                    {{time.hours}}:{{time.minutes}}:{{time.seconds}}.{{time.milliseconds}}</span>
+                                <span class="tag is-success is-medium">
+                                    {{time.formatted}}
+                                </span>
+                                <span>
+                                    <button class="button" {{action this.editTime time}}>
+                                        {{fa-icon "edit"}}
+                                    </button>
+                                </span>
                             {{else}}
-                                <span class="tag is-warning is-medium">No Time</span>
+                                <span class="tag is-warning is-medium">No Time Detected</span>
                             {{/if}}
-                        </span>
+                        {{/if}}
                     </div>
                 {{/each}}
             </nav>

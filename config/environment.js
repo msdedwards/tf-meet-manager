@@ -14,7 +14,16 @@ module.exports = function (environment) {
     fontawesome: {
       defaultPrefix: 'fas',
       icons: {
-        'free-solid-svg-icons': 'all'
+        'free-solid-svg-icons': [
+          'sort-numeric-up',
+          'sort-numeric-down',
+          'chevron-circle-up',
+          'chevron-circle-right',
+          'exclamation-triangle',
+          'save',
+          'edit',
+          'info-circle'
+        ]
       }
     },
     EmberENV: {
