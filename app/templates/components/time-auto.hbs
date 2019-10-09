@@ -1,7 +1,9 @@
 <h1 class="subtitle">Scan Timer Paper</h1>
 
 <Detector @type="text" @onDetection={{action this.onDetection}} />
-
+<button class="button" {{action this.inputManually}}>
+    Input Time Manually
+</button>
 <nav class="level no-print is-mobile">
     <div class="left-level">
         <h3 class="title">Results</h3>
@@ -36,12 +38,18 @@
 <Modal @isActive={{this.isActive}} @title="Validate Scanned Times" @close={{action this.hideConfirmation}}>
     <div class="content">
         <p>
-            Choose the entries in the order the runners placed. When finished close the modal and continue scanning
+            Review and edit any times so they appear as shown on the timing paper. When finished close the modal and
+            continue scanning
             barcodes.
         </p>
 
         <div class="content">
             <nav class="panel results">
+                <div class="panel-block">
+                    <button class="button is-fullwidth is-primary" {{action this.saveTimes}}>
+                        Save Selected Times
+                    </button>
+                </div>
                 {{#each this.activeTimes as |time index|}}
                     <div class="panel-block">
                         {{#if time.isEditing}}
@@ -55,23 +63,49 @@
                                     </button>
                                 </div>
                             </div>
+                        {{else if time.isValid}}
+                            <span class="tag is-medium is-success">
+                                {{time.formatted}}
+                            </span>
+                            <span>
+                                <label class="checkbox">
+                                    <Input @type="checkbox" @checked={{time.isSelected}} />
+                                </label>
+                                <button class="button" {{action this.editTime time}}>
+                                    {{fa-icon "edit"}}
+                                </button>
+                            </span>
                         {{else}}
-                            {{#if time.raw}}
-                                <span class="tag is-success is-medium">
-                                    {{time.formatted}}
-                                </span>
-                                <span>
-                                    <button class="button" {{action this.editTime time}}>
-                                        {{fa-icon "edit"}}
-                                    </button>
-                                </span>
+                            <span class="tag is-medium is-warning">
+                                {{time.formatted}}
+                            </span>
+                            {{#if time.hasResultForTime}}
+                                Invalid time format
                             {{else}}
-                                <span class="tag is-warning is-medium">No Time Detected</span>
+                                No Result for place
                             {{/if}}
+                            <span>
+                                <button class="button" {{action this.editTime time}}>
+                                    {{fa-icon "edit"}}
+                                </button>
+                            </span>
                         {{/if}}
                     </div>
                 {{/each}}
+                <div class="panel-block">
+                    <button class="button is-fullwidth is-primary" {{action this.saveTimes}}>
+                        Save Times
+                    </button>
+                </div>
             </nav>
         </div>
+    </div>
+</Modal>
+<Modal @isActive={{this.isManualActive}} @title="Input Times Manually" @close={{action this.hideManualConfirmation}}>
+    <div class="content">
+        <p>
+            Input the times manually for any times that aren't scanning correctly.
+        </p>
+        <TimeManual @results={{this.results}} @meet={{this.meet}} />
     </div>
 </Modal>

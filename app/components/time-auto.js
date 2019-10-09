@@ -8,17 +8,19 @@ export default class TimeAutoComponent extends Component {
   @service db;
   @tracked place = 1;
   @tracked isActive = false;
+  @tracked isManualActive = false;
   @tracked isResultsReversed = false;
   @tracked activeTimes = [];
 
   @action
   onDetection(data) {
     var result;
+    this.activeTimes = [];
     for (let i = 0; i < data.length; i++) {
-      result = this.getTimeFromText(data[i].rawValue);
+      result = this.processTimeFromText(data[i].rawValue);
       this.activeTimes.push(...result);
     }
-    this.activeTimes = this.activeTimes
+    this.activeTimes = this.activeTimes;
     this.isActive = true;
   }
 
@@ -29,15 +31,17 @@ export default class TimeAutoComponent extends Component {
 
   @action
   saveTime(time, index) {
-    this.activeTimes[index] = this.getTimeFromText(time.formatted)[0];
+    this.activeTimes[index] = this.processTimeFromText(time.formatted)[0];
     this.activeTimes = this.activeTimes;
     //set(time, "isEditing", false);
   }
 
-  getTimeFromText(segment) {
-    const regex = /(\d+)-(\d|O)?:? ?((?:\d|O)+)'? ?’?((?:\d|O)+) ?,?((?:\d|O)+)/gm;
-    let m;
+  processTimeFromText(segment) {
+    const strictTest = /^\d+-\d:\d{2}(?:'|’)\d{2} \d{2}$/;
+    const regex = /(\d+)-(\d)?:? ?((?:\d){2})'? ?’?((?:\d){2}) ?,?((?:\d){2})/gm;
     let result = [];
+    let hasResultForTime, formatted, isValid, m, time;
+    // let raw, place, hours, minutes, seconds, hundredths;
     segment = segment.replace(/O/gm, "0");
     while ((m = regex.exec(segment)) !== null) {
       // This is necessary to avoid infinite loops with zero-width matches
@@ -46,13 +50,27 @@ export default class TimeAutoComponent extends Component {
       }
 
       // The result can be accessed through the `m`-variable.
+      hasResultForTime = Number(m[1]) <= this.results.length;
+      time = `${m[2] || "0"}:${m[3] || "00"}'${m[4] || "00"} ${m[5] || "00"}`;
+      formatted = `${m[1]}-${time}`;
+      isValid = strictTest.test(formatted) && hasResultForTime
       result.push({
         raw: m[0],
-        formatted: `${m[1]}-${m[2] || "0"}:${m[3] || "00"}’${m[4] || "00"} ${m[5] || "00"}`,
-        isEditing: false
+        place: m[1],
+        time,
+        formatted,
+        isValid,
+        hasResultForTime,
+        isEditing: false,
+        isSelected: isValid
       });
     }
     return result;
+  }
+
+  @action
+  inputManually() {
+    this.isManualActive = true;
   }
 
   @action
@@ -67,18 +85,25 @@ export default class TimeAutoComponent extends Component {
   }
 
   @action
-  async submit() {
+  hideManualConfirmation() {
+    this.isManualActive = false;
+  }
+
+  @action
+  async saveTimes() {
     var result;
-    if (this.results.length >= this.place) {
-      //update result with time
-      result = this.results.find(item => item.place == this.place);
-      set(result, "time", this.time);
-      await this.db.updateResult(result);
-    } else {
-      this.displayPlaceWarning = true;
+    let active;
+    this.isActive = false;
+    for (let i = 0; i < this.activeTimes.length; i++) {
+      active = this.activeTimes[i];
+      result = this.results.find(item => item.place == active.place);
+      if (result) {
+        set(result, "time", active.time);
+
+        //update result with time
+        await this.db.updateResult(result);
+      }
     }
-    this.resetInputs();
     this.results = this.results;
-    this.place++;
   }
 }

@@ -22,7 +22,8 @@ export default class TimeManualComponent extends Component {
     }
 
     get time() {
-        return this.hours + ':' + this.minutes + ':' + Number(this.seconds).toFixed(2);
+        let sec = this.seconds.split('.').join(' ');
+        return this.hours + ':' + this.minutes + '\'' + sec;
     }
 
     resetInputs() {
