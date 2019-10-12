@@ -1,0 +1,32 @@
+{{#if this.model.results.length}}
+    <table class="table is-fullwidth">
+        <tbody>
+            {{#each this.model.results as |result|}}
+                <tr>
+                    <td>
+                        {{#if result.place}}
+                            <span class="tag is-medium">{{result.place}}</span>
+                        {{else}}
+                            <span class="tag is-medium is-danger">No Place!</span>
+                        {{/if}}
+                    </td>
+                    <td>
+                        {{result.entry.FirstName}} {{result.entry.LastName}}
+                    </td>
+                    <td>
+                        {{#if result.time}}
+                            <span class="tag is-medium">{{result.time}}</span>
+                        {{else}}
+                            <span class="tag is-medium is-danger">No Time!</span>
+                        {{/if}}
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+{{else}}
+    <h3>No results for this race</h3>
+    {{#link-to "meet.input.division.name" 1 class="button is-primary"}}
+        Input meet results
+    {{/link-to}}
+{{/if}}

@@ -28,6 +28,9 @@ export default class DbService extends Service {
                 unique: false,
                 multiEntry: false
             });
+            resultStore.createIndex('meetId', 'entry.meetId', {
+                unique: false
+            });
             // Create an index on the 'date' property of the objects.
             // store.createIndex('FirstName', 'string');
         }
@@ -112,7 +115,14 @@ export default class DbService extends Service {
     async getResultsByDivisionNum(meetId, DivNum) {
         let idb = await this.idb;
         var tx = idb.transaction('results', 'readonly')
-        var index = tx.store.index('meetId, DivNum')
+        var index = tx.store.index('meetId, DivNum');
         return index.getAll([Number(meetId), DivNum]);
+    }
+
+    async getResultsByMeetId(meetId) {
+        let idb = await this.idb;
+        let tx = idb.transaction('results', 'readonly');
+        let index = tx.store.index('meetId');
+        return index.getAll(Number(meetId));
     }
 }

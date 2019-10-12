@@ -40,10 +40,9 @@ export default class TimeAutoComponent extends Component {
     const strictTest = /^\d+-\d:\d{2}(?:'|’)\d{2} \d{2}$/;
     const regex = /(\d+)-(\d)?:? ?((?:\d){2})'? ?’?((?:\d){2}) ?,?((?:\d){2})/gm;
     let result = [];
-    let hasResultForTime, formatted, isValid, m, time;
-    // let raw, place, hours, minutes, seconds, hundredths;
+    let hasResultForTime, formatted, isValid, m, time, hours, minutes, seconds, hundredths, raw, place;
     segment = segment.replace(/O/gm, "0");
-    while ((m = regex.exec(segment)) !== null) {
+    while (([raw, place, hours, minutes, seconds, hundredths] = regex.exec(segment)) !== null) {
       // This is necessary to avoid infinite loops with zero-width matches
       if (m.index === regex.lastIndex) {
         regex.lastIndex++;
@@ -51,12 +50,16 @@ export default class TimeAutoComponent extends Component {
 
       // The result can be accessed through the `m`-variable.
       hasResultForTime = Number(m[1]) <= this.results.length;
-      time = `${m[2] || "0"}:${m[3] || "00"}'${m[4] || "00"} ${m[5] || "00"}`;
-      formatted = `${m[1]}-${time}`;
+      time = `${hours || "0"}:${minutes || "00"}'${seconds || "00"} ${hundredths || "00"}`;
+      formatted = `${raw}-${time}`;
       isValid = strictTest.test(formatted) && hasResultForTime
       result.push({
-        raw: m[0],
-        place: m[1],
+        raw,
+        place,
+        hours,
+        minutes,
+        seconds,
+        hundredths,
         time,
         formatted,
         isValid,
@@ -98,6 +101,10 @@ export default class TimeAutoComponent extends Component {
       active = this.activeTimes[i];
       result = this.results.find(item => item.place == active.place);
       if (result) {
+        set(result, 'hours', active.hours);
+        set(result, 'minutes', active.minutes);
+        set(result, 'seconds', active.seconds);
+        set(result, 'hundredths', active.hundredths);
         set(result, "time", active.time);
 
         //update result with time

@@ -43,7 +43,12 @@ export default class TimeManualComponent extends Component {
         if (this.results.length >= this.place) {
             //update result with time
             result = this.results.find(item => item.place == this.place);
-            set(result, "time", this.time);
+            let [seconds, hundredths] = this.seconds.split('.');
+            set(result, 'hours', this.hours);
+            set(result, 'minutes', this.minutes);
+            set(result, 'seconds', seconds);
+            set(result, 'hundredths', hundredths);
+            set(result, 'time', this.time);
             await this.db.updateResult(result);
         } else {
             this.displayPlaceWarning = true;

@@ -24,9 +24,13 @@ Router.map(function () {
           this.route('manual');
           this.route('auto');
         });
-        this.route('review');
       });
     });
+    this.route('review', function () {
+      this.route('division', { path: 'division/:division_id' }, function () {
+      });
+    });
+    this.route('download');
   });
 });
 
