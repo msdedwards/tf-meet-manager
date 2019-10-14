@@ -7,6 +7,9 @@ module.exports = function (defaults) {
     sassOptions: {
       extension: 'sass'
     },
+    fingerprint: {
+      extensions: ['js', 'css', 'png', 'jpg', 'map', 'webp', 'webmanifest', 'svg', 'woff', 'woff2', 'eot', 'ttf'],
+    },
     'bundle-analyzer': {
       ignoreTestFiles: true,
       ignore: [
