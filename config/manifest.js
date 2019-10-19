@@ -10,8 +10,8 @@ module.exports = function (/* environment, appConfig */) {
     description: "",
     start_url: "/",
     display: "standalone",
-    background_color: "#fff",
-    theme_color: "#fff",
+    background_color: "#002B36",
+    theme_color: "#002B36",
     icons: [
       {
         src: "./android-chrome-192x192.png",
@@ -25,7 +25,7 @@ module.exports = function (/* environment, appConfig */) {
       }
     ],
     ms: {
-      tileColor: '#fff'
+      tileColor: '#002B36'
     }
   };
 }
