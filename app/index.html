@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en-us">
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>xc-meet-manager</title>
@@ -9,17 +10,22 @@
 
     {{content-for "head"}}
 
+    <link rel="manifest" href="{{rootURL}}manifest.webmanifest">
+    <meta name="msapplication-config" content="{{rootURL}}browserconfig.xml">
+
     <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
     <link rel="stylesheet" href="{{rootURL}}assets/xc-meet-manager.css">
 
     {{content-for "head-footer"}}
-  </head>
-  <body>
+</head>
+
+<body>
     {{content-for "body"}}
 
     <script src="{{rootURL}}assets/vendor.js"></script>
     <script src="{{rootURL}}assets/xc-meet-manager.js"></script>
 
     {{content-for "body-footer"}}
-  </body>
+</body>
+
 </html>
